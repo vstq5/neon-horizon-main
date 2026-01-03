@@ -29,6 +29,4 @@ npm run dev
 - `npm run preview` - preview the production build
 - `npm run spotify:refresh-token` - helper script to generate a Spotify refresh token (requires Spotify app credentials in a local `.env`)
 
-## Notes
 
-- Do not commit `.env` (secrets). Use `.env.example` as a template.
