@@ -4,13 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-import project1 from '@/assets/project-1.png';
-import project2 from '@/assets/project-2.png';
-import project3 from '@/assets/project-3.png';
-import project4 from '@/assets/project-4.png';
-import project5 from '@/assets/project-5.png';
-import project6 from '@/assets/project-6.png';
-
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
@@ -18,43 +11,45 @@ const projects = [
     id: 1,
     title: '3D Interactive Web',
     description: 'Frontend development with 3D elements and Spline integration',
-    image: project1,
+    image: '/assets/project-1.png',
     tech: ['React', 'Spline', 'GSAP'],
   },
   {
     id: 2,
     title: 'Gaming UI Platform',
     description: 'Next-level gaming interface with immersive 3D design',
-    image: project2,
+    image: '/assets/project-2.png',
     tech: ['React', 'Three.js', 'Tailwind'],
   },
   {
     id: 3,
-    title: '3D Portfolio',
-    description: 'Creative developer portfolio with stunning animations',
-    image: project3,
-    tech: ['HTML', 'CSS', 'JavaScript'],
+    title: '3D Animated Portfolio',
+    description: 'My own personal portfolio',
+    image: '/assets/project-3.png',
+    tech: ['Vite', 'React', 'TypeScript', 'Tailwind', 'GSAP'],
+    githubUrl: 'https://github.com/vstq5/Ali-Oudah-Portfolio',
   },
   {
     id: 4,
     title: 'Gaming Website',
     description: 'Modern gaming website with dynamic visuals',
-    image: project4,
+    image: '/assets/project-4.png',
     tech: ['HTML5', 'CSS3', 'JS'],
   },
   {
     id: 5,
     title: 'Web Animation Tools',
     description: 'Building fast, reliable results with top animation tools',
-    image: project5,
+    image: '/assets/project-5.png',
     tech: ['React', 'GSAP', 'Framer'],
   },
   {
     id: 6,
-    title: 'Animated Portfolio',
-    description: 'Step-by-step animated portfolio tutorial project',
-    image: project6,
-    tech: ['CSS', 'HTML', 'JavaScript'],
+    title: 'Playlist Downloader',
+    description: 'A service to download tracks and playlists from Spotify, YouTube, and SoundCloud',
+    image: '/assets/project-6.png',
+    tech: ['TypeScript', 'Python', 'CSS'],
+    githubUrl: 'https://github.com/vstq5/playlist_downloader',
   },
 ];
 
@@ -207,13 +202,31 @@ const Projects = () => {
                   >
                     <ExternalLink size={18} />
                   </Button>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="border-foreground/20 hover:bg-secondary hover:border-secondary hover:text-secondary-foreground"
-                  >
-                    <Github size={18} />
-                  </Button>
+                  {project.githubUrl ? (
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="border-foreground/20 hover:bg-secondary hover:border-secondary hover:text-secondary-foreground"
+                      asChild
+                    >
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.title} on GitHub`}
+                      >
+                        <Github size={18} />
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="border-foreground/20 hover:bg-secondary hover:border-secondary hover:text-secondary-foreground"
+                    >
+                      <Github size={18} />
+                    </Button>
+                  )}
                 </div>
               </div>
 

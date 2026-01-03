@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import profileImage from '@/assets/ali.png';
-import resumePdf from '@/assets/Ali_Oudah_Resum.pdf';
 import { Button } from '@/components/ui/button';
 import LiveStatus from '@/components/LiveStatus';
 import SpotifyNowPlaying from '@/components/SpotifyNowPlaying';
@@ -27,6 +25,8 @@ const skills = [
 const About = () => {
   const CITY = 'Kuwait City';
   const TIMEZONE = 'Asia/Kuwait';
+  const profileImage = '/assets/ali.png';
+  const resumePdf = '/assets/Ali_Oudah_Resum.pdf';
 
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
