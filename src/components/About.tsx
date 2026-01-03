@@ -5,6 +5,7 @@ import profileImage from '@/assets/ali.png';
 import resumePdf from '@/assets/Ali_Oudah_Resum.pdf';
 import { Button } from '@/components/ui/button';
 import LiveStatus from '@/components/LiveStatus';
+import SpotifyNowPlaying from '@/components/SpotifyNowPlaying';
 import {
   siHtml5,
   siCss,
@@ -182,7 +183,10 @@ const About = () => {
             </div>
 
             <div className="mt-6 flex justify-center lg:justify-start">
-              <LiveStatus city={CITY} timeZone={TIMEZONE} />
+              <div className="flex flex-col items-center lg:items-start gap-3">
+                <LiveStatus city={CITY} timeZone={TIMEZONE} />
+                <SpotifyNowPlaying />
+              </div>
             </div>
           </div>
 
