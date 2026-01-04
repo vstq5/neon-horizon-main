@@ -81,7 +81,7 @@ const Hero = ({ introReady = true }: HeroProps) => {
         .fromTo(
           ctaRef.current,
           { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)', force3D: true },
+          { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out', force3D: true },
           '-=0.3'
         );
 
@@ -150,7 +150,7 @@ const Hero = ({ introReady = true }: HeroProps) => {
       >
         {introReady && mountSpline && (
           <iframe
-            src="https://my.spline.design/cutecomputerfollowcursor-pg6NA5t0cnuhTXgXcFE3CBOB/"
+            src="https://my.spline.design/cutecomputerfollowcursor-nNmIobJtNf8Q4NuWVLZX02U6/"
             frameBorder="0"
             title="3D Background"
             loading="eager"
