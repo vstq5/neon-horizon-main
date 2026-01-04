@@ -212,6 +212,7 @@ body.is-loading .noise-overlay {
 /* Spline container */
 .spline-container {
   @apply absolute inset-0 w-full h-full;
+  contain: layout paint;
 }
 
 .spline-container iframe {

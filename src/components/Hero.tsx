@@ -16,7 +16,39 @@ const Hero = ({ introReady = true }: HeroProps) => {
   const shape2Ref = useRef<HTMLDivElement>(null);
   const shape3Ref = useRef<HTMLDivElement>(null);
 
+  const [mountSpline, setMountSpline] = useState(false);
   const [splineReady, setSplineReady] = useState(false);
+
+  useEffect(() => {
+    if (!introReady) {
+      setMountSpline(false);
+      setSplineReady(false);
+      return;
+    }
+
+    // Always load Spline, but defer mounting the iframe until the browser is idle.
+    // This reduces the initial load spike on slower devices without disabling the model.
+    let timeoutId: number | undefined;
+    let idleId: number | undefined;
+
+    const mount = () => setMountSpline(true);
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleId = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout?: number }) => number }).requestIdleCallback(
+        mount,
+        { timeout: 1200 }
+      );
+    } else {
+      timeoutId = window.setTimeout(mount, 250);
+    }
+
+    return () => {
+      if (typeof window !== 'undefined' && idleId !== undefined && 'cancelIdleCallback' in window) {
+        (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
+  }, [introReady]);
 
   useEffect(() => {
     if (!introReady) return;
@@ -94,10 +126,8 @@ const Hero = ({ introReady = true }: HeroProps) => {
   }, [introReady]);
 
   useEffect(() => {
-    if (!introReady) {
-      setSplineReady(false);
-    }
-  }, [introReady]);
+    if (!mountSpline) setSplineReady(false);
+  }, [mountSpline]);
 
   const scrollToProjects = () => {
     const element = document.querySelector('#projects');
@@ -118,12 +148,13 @@ const Hero = ({ introReady = true }: HeroProps) => {
           splineReady ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {introReady && (
+        {introReady && mountSpline && (
           <iframe
             src="https://my.spline.design/cutecomputerfollowcursor-pg6NA5t0cnuhTXgXcFE3CBOB/"
             frameBorder="0"
             title="3D Background"
             loading="eager"
+            fetchPriority="low"
             onLoad={() => {
               // Spline iframes can briefly render "unstable" while they settle and
               // measure the final container size (especially after the intro overlay).
