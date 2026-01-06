@@ -1,5 +1,4 @@
-// Vercel Serverless Function: /api/spotify/callback
-// Exchanges Spotify OAuth code for tokens and displays refresh_token.
+
 
 function parseCookies(cookieHeader: string | undefined) {
   const cookies: Record<string, string> = {};
@@ -105,7 +104,7 @@ export default async function handler(req: any, res: any) {
   const code = req.query?.code ?? null;
   const state = req.query?.state ?? null;
 
-  // Clear state cookie either way.
+
   setCookie(res, 'spotify_oauth_state', '', { maxAgeSeconds: 0 });
 
   if (error) {

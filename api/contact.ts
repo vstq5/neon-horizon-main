@@ -1,7 +1,4 @@
-// Vercel Serverless Function: /api/contact
-// POST JSON: { name, email, message }
-// Sends email via Resend if RESEND_API_KEY is configured.
-// Falls back gracefully (client can open mailto) if not configured.
+
 
 function json(res: any, status: number, body: unknown) {
   res.statusCode = status;
@@ -16,7 +13,7 @@ function requiredEnv(name: string) {
 }
 
 function isValidEmail(email: string) {
-  // Simple, pragmatic validation.
+
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
@@ -24,6 +21,16 @@ export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return json(res, 405, { ok: false, error: 'Method not allowed' });
+  }
+
+  const origin = req.headers.origin || req.headers.referer;
+  const isAllowed = !origin ||
+    origin.includes('localhost') ||
+    origin.includes('vercel.app') ||
+    (process.env.VERCEL_URL && origin.includes(process.env.VERCEL_URL));
+
+  if (!isAllowed) {
+    return json(res, 403, { ok: false, error: 'Forbidden' });
   }
 
   const raw = typeof req.body === 'string' ? req.body : null;
@@ -45,12 +52,12 @@ export default async function handler(req: any, res: any) {
     return json(res, 400, { ok: false, error: 'Message too long' });
   }
 
-  const toEmail = requiredEnv('CONTACT_TO_EMAIL') ?? 'alialoudah5@gmail.com';
-  const fromEmail = requiredEnv('CONTACT_FROM_EMAIL') ?? 'onboarding@resend.dev';
+  const toEmail = requiredEnv('CONTACT_TO_EMAIL');
+  const fromEmail = requiredEnv('CONTACT_FROM_EMAIL');
   const resendApiKey = requiredEnv('RESEND_API_KEY');
 
-  if (!resendApiKey) {
-    // Not configured: allow client fallback to mailto.
+  if (!resendApiKey || !toEmail || !fromEmail) {
+
     return json(res, 501, {
       ok: false,
       error: 'Email provider not configured',

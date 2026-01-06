@@ -1,5 +1,4 @@
-// Vercel Serverless Function: /api/spotify/authorize
-// Redirects to Spotify OAuth and sets a short-lived state cookie.
+
 
 import crypto from 'node:crypto';
 

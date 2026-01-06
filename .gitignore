@@ -29,3 +29,15 @@ src/assets/
 *.njsproj
 *.sln
 *.sw?
+
+# Vercel
+.vercel
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Security precautions
+*.pem
+*.key
+*.cert

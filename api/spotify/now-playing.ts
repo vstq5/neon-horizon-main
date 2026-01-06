@@ -1,8 +1,4 @@
-// Vercel Serverless Function: /api/spotify/now-playing
-// Uses server-only env vars:
-// - SPOTIFY_CLIENT_ID
-// - SPOTIFY_CLIENT_SECRET
-// - SPOTIFY_REFRESH_TOKEN
+
 
 function json(res: any, status: number, body: unknown) {
   res.statusCode = status;
